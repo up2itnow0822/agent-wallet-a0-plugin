@@ -1,0 +1,85 @@
+<html>
+<head>
+  <title>Agent Wallet</title>
+  <script type="module" src="/plugins/agent-wallet/webui/wallet-store.js"></script>
+</head>
+<body>
+  <div x-data>
+    <template x-if="$store.walletStore">
+      <div x-init="$store.walletStore.onOpen()" x-destroy="$store.walletStore.cleanup()">
+
+        <!-- Header -->
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+          <span style="font-size: 28px;">💰</span>
+          <div>
+            <h2 style="margin: 0; color: #e2e8f0;">Agent Wallet</h2>
+            <span style="font-size: 13px; color: #64748b;"
+                  x-text="$store.walletStore.chain.toUpperCase()"></span>
+          </div>
+        </div>
+
+        <!-- Loading -->
+        <template x-if="$store.walletStore.loading">
+          <div style="text-align: center; padding: 40px; color: #94a3b8;">
+            Loading wallet...
+          </div>
+        </template>
+
+        <!-- Error -->
+        <template x-if="$store.walletStore.error">
+          <div style="padding: 12px; background: #7f1d1d; border-radius: 8px; color: #fca5a5; margin-bottom: 16px;"
+               x-text="$store.walletStore.error"></div>
+        </template>
+
+        <!-- Wallet Info -->
+        <template x-if="!$store.walletStore.loading && $store.walletStore.address">
+          <div>
+            <!-- Address -->
+            <div style="padding: 16px; background: #1e293b; border-radius: 8px; margin-bottom: 16px;">
+              <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Address</div>
+              <a :href="$store.walletStore.explorerUrl" target="_blank"
+                 style="color: #60a5fa; text-decoration: none; font-family: monospace; font-size: 14px;"
+                 x-text="$store.walletStore.shortAddress"></a>
+            </div>
+
+            <!-- Balances -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+              <div style="padding: 16px; background: #1e293b; border-radius: 8px;">
+                <div style="font-size: 12px; color: #64748b;">ETH Balance</div>
+                <div style="font-size: 20px; font-weight: bold; color: #e2e8f0;"
+                     x-text="parseFloat($store.walletStore.balanceEth).toFixed(6)"></div>
+              </div>
+              <div style="padding: 16px; background: #1e293b; border-radius: 8px;">
+                <div style="font-size: 12px; color: #64748b;">USDC Balance</div>
+                <div style="font-size: 20px; font-weight: bold; color: #10b981;"
+                     x-text="'$' + parseFloat($store.walletStore.balanceUsdc).toFixed(2)"></div>
+              </div>
+            </div>
+
+            <!-- Capabilities -->
+            <div style="padding: 16px; background: #1e293b; border-radius: 8px;">
+              <div style="font-size: 14px; color: #94a3b8; margin-bottom: 8px;">Available Operations</div>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <span style="padding: 4px 10px; background: #0f172a; border-radius: 12px; font-size: 12px; color: #60a5fa;">Send ETH/Tokens</span>
+                <span style="padding: 4px 10px; background: #0f172a; border-radius: 12px; font-size: 12px; color: #60a5fa;">Check Balances</span>
+                <span style="padding: 4px 10px; background: #0f172a; border-radius: 12px; font-size: 12px; color: #60a5fa;">Swap (Uniswap V3)</span>
+                <span style="padding: 4px 10px; background: #0f172a; border-radius: 12px; font-size: 12px; color: #60a5fa;">Bridge (CCTP)</span>
+                <span style="padding: 4px 10px; background: #0f172a; border-radius: 12px; font-size: 12px; color: #60a5fa;">x402 Payments</span>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <!-- No Wallet -->
+        <template x-if="!$store.walletStore.loading && !$store.walletStore.address && !$store.walletStore.error">
+          <div style="text-align: center; padding: 40px; color: #94a3b8;">
+            <p>No wallet configured.</p>
+            <p style="font-size: 13px;">Set <code>AGENT_WALLET_PRIVATE_KEY</code> in your environment to get started.</p>
+          </div>
+        </template>
+
+      </div>
+    </template>
+  </div>
+</body>
+</html>

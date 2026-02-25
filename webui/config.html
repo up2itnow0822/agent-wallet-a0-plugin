@@ -1,0 +1,106 @@
+<html>
+<head>
+  <title>Agent Wallet Settings</title>
+  <script type="module">
+    import { store } from "/components/plugins/plugin-settings-store.js";
+  </script>
+</head>
+<body>
+  <div x-data>
+    <template x-if="$store.pluginSettings">
+      <div>
+        <h3 style="margin-bottom: 12px; color: #e2e8f0;">🔐 Wallet Configuration</h3>
+
+        <!-- Chain Selection -->
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: #94a3b8; font-size: 13px;">Chain</label>
+          <select x-model="$store.pluginSettings.settings.chain"
+                  style="width: 100%; padding: 8px 12px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0;">
+            <option value="base">Base (Mainnet)</option>
+            <option value="base-sepolia">Base Sepolia (Testnet)</option>
+            <option value="ethereum">Ethereum</option>
+            <option value="arbitrum">Arbitrum</option>
+            <option value="polygon">Polygon</option>
+          </select>
+        </div>
+
+        <!-- RPC URL -->
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: #94a3b8; font-size: 13px;">RPC URL</label>
+          <input type="text"
+                 x-model="$store.pluginSettings.settings.rpc_url"
+                 placeholder="https://mainnet.base.org"
+                 style="width: 100%; padding: 8px 12px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0;" />
+          <span style="font-size: 11px; color: #64748b;">Leave blank to use the default RPC for the selected chain.</span>
+        </div>
+
+        <!-- Private Key Env Var -->
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: #94a3b8; font-size: 13px;">Private Key Environment Variable</label>
+          <input type="text"
+                 x-model="$store.pluginSettings.settings.private_key_env"
+                 placeholder="AGENT_WALLET_PRIVATE_KEY"
+                 style="width: 100%; padding: 8px 12px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0;" />
+          <span style="font-size: 11px; color: #64748b;">Name of the env var holding the wallet private key. Never paste a key here.</span>
+        </div>
+
+        <h3 style="margin: 20px 0 12px; color: #e2e8f0;">💰 Spend Limits</h3>
+
+        <!-- Per-TX Limit -->
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: #94a3b8; font-size: 13px;">Per-Transaction Limit (USD)</label>
+          <input type="number"
+                 x-model.number="$store.pluginSettings.settings.spend_limit_usd"
+                 min="0" step="1"
+                 style="width: 100%; padding: 8px 12px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0;" />
+        </div>
+
+        <!-- Daily Limit -->
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: #94a3b8; font-size: 13px;">Daily Spend Limit (USD)</label>
+          <input type="number"
+                 x-model.number="$store.pluginSettings.settings.daily_limit_usd"
+                 min="0" step="10"
+                 style="width: 100%; padding: 8px 12px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0;" />
+        </div>
+
+        <h3 style="margin: 20px 0 12px; color: #e2e8f0;">🔄 Swap Settings</h3>
+
+        <!-- Slippage -->
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: #94a3b8; font-size: 13px;">Swap Slippage (bps)</label>
+          <input type="number"
+                 x-model.number="$store.pluginSettings.settings.swap_slippage_bps"
+                 min="1" max="1000" step="10"
+                 style="width: 100%; padding: 8px 12px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0;" />
+          <span style="font-size: 11px; color: #64748b;">50 = 0.5%, 100 = 1%</span>
+        </div>
+
+        <!-- Fee Tier -->
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: #94a3b8; font-size: 13px;">Uniswap V3 Fee Tier</label>
+          <select x-model.number="$store.pluginSettings.settings.swap_fee_tier"
+                  style="width: 100%; padding: 8px 12px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0;">
+            <option value="500">0.05% (Stablecoins)</option>
+            <option value="3000">0.3% (Standard)</option>
+            <option value="10000">1% (Exotic)</option>
+          </select>
+        </div>
+
+        <h3 style="margin: 20px 0 12px; color: #e2e8f0;">🌉 x402 Payments</h3>
+
+        <!-- x402 Max -->
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; color: #94a3b8; font-size: 13px;">Max x402 Payment (USD)</label>
+          <input type="number"
+                 x-model.number="$store.pluginSettings.settings.x402_max_payment_usd"
+                 min="0" step="1"
+                 style="width: 100%; padding: 8px 12px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0;" />
+          <span style="font-size: 11px; color: #64748b;">Maximum amount the agent can auto-pay for x402 HTTP resources.</span>
+        </div>
+
+      </div>
+    </template>
+  </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+# Agent Wallet Plugin — Default Configuration
+# Override these in the plugin settings UI or per-agent config.
+
+# RPC endpoint for Base mainnet (default). Use your own for production.
+rpc_url: "https://mainnet.base.org"
+
+# Chain: base, base-sepolia, ethereum, arbitrum, polygon
+chain: "base"
+
+# Per-transaction spend limit in USD (0 = unlimited — NOT recommended)
+spend_limit_usd: 10.0
+
+# Daily spend limit in USD
+daily_limit_usd: 100.0
+
+# Wallet private key (set via environment variable AGENT_WALLET_PRIVATE_KEY)
+# NEVER put your private key directly in this file.
+private_key_env: "AGENT_WALLET_PRIVATE_KEY"
+
+# Token addresses (Base mainnet defaults)
+usdc_address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+
+# Swap settings
+swap_slippage_bps: 50  # 0.5%
+swap_fee_tier: 3000     # Uniswap V3 fee tier (500=0.05%, 3000=0.3%, 10000=1%)
+
+# Bridge settings (CCTP)
+bridge_destination_chain: "ethereum"
+
+# x402 payment settings
+x402_max_payment_usd: 5.0

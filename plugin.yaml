@@ -1,0 +1,9 @@
+title: Agent Wallet
+description: Non-custodial crypto wallet for AI agents. Send payments, check balances, swap tokens (Uniswap V3), bridge cross-chain (CCTP), and make x402 payments — all from your agent.
+version: 1.0.0
+settings_sections:
+  - agent
+  - external
+per_project_config: false
+per_agent_config: true
+always_enabled: false
