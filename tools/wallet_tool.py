@@ -5,11 +5,8 @@ Non-custodial wallet operations: balance, send, swap, bridge, x402.
 import json
 import os
 import asyncio
-from dataclasses import dataclass
-from typing import Any
 
 from python.helpers.tool import Tool, Response
-from python.helpers.print_style import PrintStyle
 from python.helpers.plugins import get_plugin_config
 
 # Chain configurations
@@ -164,7 +161,6 @@ class WalletBalance(Tool):
             """)
         elif token:
             # Check specific token balance
-            target = address or "wallet.address"
             addr_setup = "" if address else "if (!wallet) { console.log(JSON.stringify({error: 'No private key configured'})); return; }"
             addr_ref = f'"{address}"' if address else "wallet.address"
             script = _build_web3_script(config, f"""
@@ -201,7 +197,6 @@ class WalletBalance(Tool):
     async def _run_node(self, script: str) -> str:
         """Execute a Node.js script and return output."""
         import tempfile
-        import subprocess
 
         with tempfile.NamedTemporaryFile(mode="w", suffix=".js", delete=False) as f:
             f.write(script)
@@ -331,7 +326,6 @@ class WalletSwap(Tool):
                 break_loop=False,
             )
 
-        slippage = config.get("swap_slippage_bps", 50)
         fee_tier = config.get("swap_fee_tier", 3000)
 
         # Uniswap V3 SwapRouter02 on Base
