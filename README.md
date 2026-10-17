@@ -1,3 +1,6 @@
+> [!WARNING]
+> **Paused for security maintenance. Do not use in production.**
+
 # 💰 Agent Wallet — A0 Plugin
 
 Non-custodial crypto wallet for Agent Zero. Give your agents the ability to send payments, check balances, swap tokens, bridge cross-chain, and pay for x402 resources — all without custodial risk.
